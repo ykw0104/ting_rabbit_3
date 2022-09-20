@@ -1,5 +1,16 @@
 <template>
-  <div>app1</div>
+  <div></div>
 </template>
 
-<style lang="scss"></style>
+<script>
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "App",
+  setup() {
+    return {};
+  },
+});
+</script>
+
+<style lang="scss" scoped></style>
