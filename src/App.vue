@@ -1,16 +1,9 @@
 <template>
-  <div class="container"></div>
+  <RouterView />
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "App",
-  setup() {
-    return {};
-  },
-});
+<script setup>
+import { ref } from "vue";
 </script>
 
 <style lang="scss" scoped></style>
