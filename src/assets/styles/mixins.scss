@@ -1,5 +1,5 @@
 // 鼠标经过上移阴影动画
-@mixin hovershadow {
+@mixin hoverShadow {
   transition: all 0.5s;
 
   &:hover {
