@@ -1,6 +1,6 @@
 <template>
   <!-- 顶部 -->
-  <div>顶部</div>
+  <AppNavbar></AppNavbar>
 
   <!-- 头部 -->
   <div>头部</div>
@@ -15,6 +15,8 @@
   <div>底部</div>
 </template>
 
-<script setup></script>
+<script setup>
+import AppNavbar from "@/1_components/app-navbar.vue";
+</script>
 
 <style lang="scss" scoped></style>
