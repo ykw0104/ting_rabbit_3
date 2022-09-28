@@ -3,7 +3,7 @@
   <AppNavbar></AppNavbar>
 
   <!-- 头部 -->
-  <div>头部</div>
+  <AppHeader></AppHeader>
 
   <!-- 内容 -->
   <div class="main">
@@ -17,6 +17,7 @@
 
 <script setup>
 import AppNavbar from "@/1_components/app-navbar.vue";
+import AppHeader from "@/1_components/app-header.vue";
 </script>
 
 <style lang="scss" scoped></style>
