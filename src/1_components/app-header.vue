@@ -2,7 +2,9 @@
   <header class="app-header">
     <div class="container">
       <h1 class="logo"><RouterLink to="/">小兔鲜</RouterLink></h1>
-      <ul class="navs">
+
+      <!-- 头部导航 -->
+      <!-- <ul class="navs">
         <li class="home"><RouterLink to="/">首页</RouterLink></li>
         <li><a href="#">美食</a></li>
         <li><a href="#">餐厨</a></li>
@@ -13,11 +15,14 @@
         <li><a href="#">孕婴</a></li>
         <li><a href="#">服装</a></li>
         <li><a href="#">杂货</a></li>
-      </ul>
+      </ul> -->
+      <AppHeaderNav />
+
       <div class="search">
         <i class="iconfont icon-sousuo"></i>
         <input type="text" placeholder="搜一搜" />
       </div>
+
       <div class="cart">
         <a class="curr" href="#">
           <i class="iconfont icon-gouwuche" style="font-size: 20px"></i
@@ -28,7 +33,9 @@
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import AppHeaderNav from "./app-header-nav.vue";
+</script>
 
 <style lang="scss" scoped>
 .app-header {
@@ -51,32 +58,32 @@
     }
   }
 
-  .navs {
-    display: flex;
-    justify-content: space-around;
-    width: 820px;
-    padding-left: 40px;
+  // .navs {
+  //   display: flex;
+  //   justify-content: space-around;
+  //   width: 820px;
+  //   padding-left: 40px;
 
-    li {
-      margin-right: 40px;
-      width: 38px;
-      text-align: center;
+  //   li {
+  //     margin-right: 40px;
+  //     width: 38px;
+  //     text-align: center;
 
-      a {
-        display: inline-block;
-        height: 32px;
-        line-height: 32px;
-        font-size: 16px;
-      }
+  //     a {
+  //       display: inline-block;
+  //       height: 32px;
+  //       line-height: 32px;
+  //       font-size: 16px;
+  //     }
 
-      &:hover {
-        a {
-          color: $xtxColor;
-          border-bottom: 1px solid $xtxColor;
-        }
-      }
-    }
-  }
+  //     &:hover {
+  //       a {
+  //         color: $xtxColor;
+  //         border-bottom: 1px solid $xtxColor;
+  //       }
+  //     }
+  //   }
+  // }
 
   .search {
     position: relative;

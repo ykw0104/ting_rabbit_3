@@ -17,3 +17,7 @@ https://www.bilibili.com/video/BV1zB4y1C7DT/?spm_id_from=333.337.search-card.all
 登录密码111111
 支付密码111111
 ```
+
+```
+请求的url  src\utils\request.js
+```

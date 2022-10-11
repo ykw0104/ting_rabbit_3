@@ -16,9 +16,14 @@
 </template>
 
 <script setup>
+import { useStore } from "vuex";
+
 import AppNavbar from "@/1_components/app-navbar.vue";
 import AppHeader from "@/1_components/app-header.vue";
 import AppFooter from "@/1_components/app-footer.vue";
+
+const store = useStore();
+store.dispatch("category/getList");
 </script>
 
 <style lang="scss" scoped>

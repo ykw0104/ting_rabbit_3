@@ -1,6 +1,6 @@
 import axios from "axios";
-import store from "@/store";
-import router from "@/router";
+import store from "@/3_store";
+import router from "@/2_router";
 
 // 导出基准地址，原因：其他地方不是通过axios发请求的地方用上基准地址
 export const baseURL = "https://apipc-xiaotuxian-front.itheima.net";
