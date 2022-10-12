@@ -1,11 +1,18 @@
 <template>
-  <div class="container">Home Page</div>
+  <div class="page-home">
+    <div class="home-entry">
+      <div class="container">
+        <!-- 左侧分类 -->
+        <HomeCategory />
+
+        <!-- 轮播图 -->
+      </div>
+    </div>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import HomeCategory from "./components/home-category";
+</script>
 
-<style lang="scss" scoped>
-.container {
-  @include hoverShadow;
-}
-</style>
+<style lang="scss" scoped></style>
