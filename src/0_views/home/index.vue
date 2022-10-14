@@ -6,6 +6,9 @@
 
       <!-- 轮播图 -->
       <HomeBanner />
+
+      <!-- 新鲜好物 -->
+      <HomeNew />
     </div>
   </div>
 </template>
@@ -13,6 +16,7 @@
 <script setup>
 import HomeCategory from "./components/home-category";
 import HomeBanner from "./components/home-banner";
+import HomeNew from "./components/home-new.vue";
 </script>
 
 <style lang="scss" scoped></style>
