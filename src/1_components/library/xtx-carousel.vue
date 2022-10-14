@@ -1,63 +1,146 @@
-// 轮播图
 <template>
-  <div class="xtx-carousel">
+  <div class="xtx-carousel" @mouseenter="stop()" @mouseleave="start()">
+    <!-- 轮播图图片 -->
     <ul class="carousel-body">
+      <!-- fade类: 显示图片 -->
       <li
         class="carousel-item"
         v-for="(item, i) in sliders"
         :key="i"
         :class="{ fade: index === i }"
       >
-        <RouterLink to="/">
+        <!-- 1. 轮播图片 -->
+        <RouterLink v-if="item.imgUrl" to="/">
           <img :src="item.imgUrl" alt="" />
         </RouterLink>
+        <!-- 2. 或 商品列表 -->
+        <div v-else class="slider">
+          <RouterLink
+            v-for="goods in item"
+            :key="goods.id"
+            :to="`/product/${goods.id}`"
+          >
+            <img :src="goods.picture" alt="" />
+            <p class="name ellipsis">{{ goods.name }}</p>
+            <p class="price">&yen;{{ goods.price }}</p>
+          </RouterLink>
+        </div>
       </li>
     </ul>
-
-    <a href="javascript:;" class="carousel-btn prev"
+    <!-- 上一张 -->
+    <a @click="toggle(-1)" href="javascript:;" class="carousel-btn prev"
       ><i class="iconfont icon-xiangzuojiantou"></i
     ></a>
-    <a href="javascript:;" class="carousel-btn next"
+    <!-- 下一张 -->
+    <a @click="toggle(1)" href="javascript:;" class="carousel-btn next"
       ><i class="iconfont icon-xiangyoujiantou"></i
     ></a>
-
+    <!-- 点状指示器 -->
     <div class="carousel-indicator">
+      <!-- active类，激活指示器 -->
       <span
         v-for="(item, i) in sliders"
         :key="i"
         :class="{ active: index === i }"
+        @click="index = i"
       ></span>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, watch, onUnmounted } from "vue";
+
 export default {
   name: "XtxCarousel",
+
+  props: {
+    // 轮播图数据
+    sliders: {
+      type: Array,
+      default: () => [],
+    },
+    // 是否自动轮播
+    autoPlay: {
+      type: Boolean,
+      default: false,
+    },
+    // 间隔时间
+    duration: {
+      type: Number,
+      default: 3000,
+    },
+  },
+
+  setup(props) {
+    // 显示图片的索引
+    const index = ref(0);
+
+    //自动轮播图的逻辑
+    let timer = null;
+    const autoPlayFn = () => {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        index.value++;
+        if (index.value >= props.sliders.length) {
+          index.value = 0;
+        }
+      }, props.duration);
+    };
+
+    // 监听sliders变化,触发自动播放
+    watch(
+      () => props.sliders,
+      (newVal) => {
+        // sliders有数据且开启自动播放，才调用自动播放函数
+        if (newVal.length && props.autoPlay) {
+          index.value = 0;
+          autoPlayFn();
+        }
+      },
+      { immediate: true }
+    );
+
+    // 鼠标进入停止，移出开启自动，前提条件：autoPlay为true
+    const stop = () => {
+      if (timer) clearInterval(timer);
+    };
+    const start = () => {
+      if (props.sliders.length && props.autoPlay) {
+        autoPlayFn();
+      }
+    };
+
+    // 上一张下一张
+    const toggle = (step) => {
+      const newIndex = index.value + step;
+      if (newIndex >= props.sliders.length) {
+        index.value = 0;
+        return;
+      }
+      if (newIndex < 0) {
+        index.value = props.sliders.length - 1;
+        return;
+      }
+      index.value = newIndex;
+    };
+
+    // 组件销毁，清理定时器
+    onUnmounted(() => {
+      clearInterval(timer);
+    });
+
+    return { index, stop, start, toggle };
+  },
 };
 </script>
-
-<script setup>
-import { ref } from "vue";
-
-defineProps({
-  sliders: {
-    type: Array,
-    default: () => [],
-  },
-});
-
-// 默认显示的图片的索引
-const index = ref(0);
-</script>
-
 <style scoped lang="scss">
 .xtx-carousel {
-  position: relative;
   width: 100%;
   height: 100%;
   min-width: 300px;
   min-height: 150px;
+  position: relative;
 
   .carousel {
     &-body {
@@ -66,11 +149,11 @@ const index = ref(0);
     }
 
     &-item {
+      width: 100%;
+      height: 100%;
       position: absolute;
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
       opacity: 0;
       transition: opacity 0.5s linear;
 
@@ -87,12 +170,11 @@ const index = ref(0);
 
     &-indicator {
       position: absolute;
-      width: 100%;
       left: 0;
-      z-index: 2;
       bottom: 20px;
+      z-index: 2;
+      width: 100%;
       text-align: center;
-
       span {
         display: inline-block;
         width: 12px;
@@ -110,18 +192,17 @@ const index = ref(0);
         }
       }
     }
-
     &-btn {
-      position: absolute;
-      top: 228px;
-      z-index: 2;
       width: 44px;
       height: 44px;
-      line-height: 44px;
       background: rgba(0, 0, 0, 0.2);
       color: #fff;
       border-radius: 50%;
+      position: absolute;
+      top: 228px;
+      z-index: 2;
       text-align: center;
+      line-height: 44px;
       opacity: 0;
       transition: all 0.5s;
 
@@ -138,6 +219,36 @@ const index = ref(0);
   &:hover {
     .carousel-btn {
       opacity: 1;
+    }
+  }
+}
+
+// 轮播商品
+.slider {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
+
+  > a {
+    width: 240px;
+    text-align: center;
+
+    img {
+      width: 230px !important;
+      height: 230px !important;
+      padding: 20px;
+    }
+
+    .name {
+      padding: 0 40px;
+      font-size: 16px;
+      color: #666;
+    }
+
+    .price {
+      margin-top: 15px;
+      font-size: 16px;
+      color: $priceColor;
     }
   }
 }
