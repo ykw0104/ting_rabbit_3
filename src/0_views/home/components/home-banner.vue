@@ -1,6 +1,6 @@
 <template>
   <div class="home-banner">
-    <XtxCarousel />
+    <XtxCarousel :sliders="sliders" />
   </div>
 </template>
 
@@ -8,6 +8,16 @@
 export default {
   name: "HomeBanner",
 };
+</script>
+
+<script setup>
+import { ref } from "vue";
+import { findBanner } from "@/api/home";
+
+const sliders = ref([]);
+findBanner().then((data) => {
+  sliders.value = data.result;
+});
 </script>
 
 <style scoped lang="scss">
