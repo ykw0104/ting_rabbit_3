@@ -1,8 +1,9 @@
 // 首页左侧分类
 <template>
-  <div class="home-category">
+  <div class="home-category" @mouseleave="categoryId = null">
     <ul class="menu">
       <li
+        :class="{ active: categoryId && categoryId === item.id }"
         v-for="item in menuList"
         :key="item.id"
         @mouseenter="getCategoryId(item.id)"
@@ -19,13 +20,33 @@
             >{{ sub.name }}</RouterLink
           >
         </template>
+        <template v-else>
+          <XtxSkeleton
+            width="60px"
+            height="16px"
+            style="margin-right: 5px"
+            bg="rgba(255,255,255,0.2)"
+            animated
+          />
+          <XtxSkeleton
+            width="50px"
+            height="16px"
+            bg="rgba(255,255,255,0.2)"
+            animated
+          />
+        </template>
       </li>
     </ul>
 
     <!-- 二级类目的弹层 -->
     <div class="layer">
-      <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
+      <h4>
+        {{ currCategory && currCategory.id === "brand" ? "分类" : "品牌" }}推荐
+        <small>根据您的购买或浏览记录推荐</small>
+      </h4>
+
       <ul v-if="currCategory && currCategory.goods">
+        <!-- 商品数据 -->
         <li v-for="item in currCategory.goods" :key="item.id">
           <RouterLink to="/">
             <img :src="item.picture" alt="" />
@@ -37,6 +58,22 @@
           </RouterLink>
         </li>
       </ul>
+
+      <!-- 品牌数据 -->
+      <ul v-if="currCategory && currCategory.brands">
+        <li class="brand" v-for="brand in currCategory.brands" :key="brand.id">
+          <RouterLink to="/">
+            <img :src="brand.picture" alt="" />
+            <div class="info">
+              <p class="place">
+                <i class="iconfont icon-dingwei"></i>{{ brand.place }}
+              </p>
+              <p class="name ellipsis">{{ brand.name }}</p>
+              <p class="desc ellipsis-2">{{ brand.desc }}</p>
+            </div>
+          </RouterLink>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -44,6 +81,7 @@
 <script setup>
 import { computed, reactive, ref } from "vue";
 import { useStore } from "vuex";
+import { findBrand } from "@/api/home.js";
 
 const store = useStore();
 
@@ -52,6 +90,8 @@ const brand = reactive({
   id: "brand",
   name: "品牌",
   children: [{ id: "brand-children", name: "品牌推荐" }],
+  // 品牌列表
+  brands: [],
 });
 const menuList = computed(() => {
   // 9个一级类目和每个一级类目下的2个二级类目
@@ -75,9 +115,13 @@ const categoryId = ref(null);
 const getCategoryId = (id) => {
   categoryId.value = id;
 };
-
 const currCategory = computed(() => {
   return menuList.value.find((item) => item.id === categoryId.value);
+});
+
+// 获取品牌数据
+findBrand().then((data) => {
+  brand.brands = data.result;
 });
 </script>
 
@@ -95,7 +139,8 @@ const currCategory = computed(() => {
       height: 50px;
       line-height: 50px;
 
-      &:hover {
+      &:hover,
+      &.active {
         background: $xtxColor;
       }
 
@@ -185,6 +230,26 @@ const currCategory = computed(() => {
               i {
                 font-size: 16px;
               }
+            }
+          }
+        }
+      }
+
+      li.brand {
+        height: 180px;
+
+        a {
+          align-items: flex-start;
+          img {
+            width: 120px;
+            height: 160px;
+          }
+          .info {
+            p {
+              margin-top: 8px;
+            }
+            .place {
+              color: #999;
             }
           }
         }
