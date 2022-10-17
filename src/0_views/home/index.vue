@@ -9,6 +9,9 @@
 
       <!-- 新鲜好物 -->
       <HomeNew />
+
+      <!-- 人气推荐 -->
+      <HomeHot />
     </div>
   </div>
 </template>
@@ -17,6 +20,7 @@
 import HomeCategory from "./components/home-category";
 import HomeBanner from "./components/home-banner";
 import HomeNew from "./components/home-new.vue";
+import HomeHot from "./components/home-hot.vue";
 </script>
 
 <style lang="scss" scoped></style>
