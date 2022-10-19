@@ -5,7 +5,7 @@
         <XtxMore path="/" />
       </template>
 
-      <div style="position: relative; height: 406px">
+      <div ref="target" style="position: relative; height: 406px">
         <Transition name="fade">
           <!-- 面板内容 -->
           <ul v-if="goods.length" ref="pannel" class="goods-list">
@@ -36,11 +36,16 @@ import { ref } from "vue";
 import { findNew } from "@/api/home";
 import HomePanel from "./home-panel";
 import HomeSkeleton from "./home-skeleton.vue";
+import { useLazyData } from "@/hooks";
 
-const goods = ref([]);
-findNew().then((data) => {
-  goods.value = data.result;
-});
+// const goods = ref([]);
+// findNew().then((data) => {
+//   goods.value = data.result;
+// });
+
+const data = useLazyData(findNew);
+const target = data.target;
+const goods = data.result;
 </script>
 <style scoped lang="scss">
 .goods-list {
