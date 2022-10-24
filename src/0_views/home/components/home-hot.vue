@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+// import { ref } from "vue";
 import HomePanel from "./home-panel";
 import { findHot } from "@/api/home";
 import HomeSkeleton from "./home-skeleton.vue";
