@@ -14,5 +14,37 @@ export default {
     app.component(XtxSkeleton.name, XtxSkeleton);
     app.component(XtxCarousel.name, XtxCarousel);
     app.component(XtxMore.name, XtxMore);
+
+    // 定义指令
+    defineDirective(app);
   },
+};
+
+import defaultImg from "@/assets/images/200.png";
+// 指令
+const defineDirective = (app) => {
+  // 图片懒加载指令
+  app.directive("lazy", {
+    mounted(el, binding) {
+      const observer = new IntersectionObserver(
+        ([{ isIntersecting }]) => {
+          // 进入可视区
+          if (isIntersecting) {
+            // 进入可视区后,停止观察
+            observer.unobserve(el);
+            el.onerror = () => {
+              el.src = defaultImg;
+            };
+            el.src = binding.value;
+          }
+        },
+        {
+          threshold: 0.01,
+        }
+      );
+
+      // 开启观察
+      observer.observe(el);
+    },
+  });
 };
