@@ -19,6 +19,10 @@ export const useLazyData = (apiFn) => {
           result.value = data.result;
         });
       }
+    },
+    {
+      // 相交的阈值
+      threshold: 0,
     }
   );
   // 返回--->数据（dom,后台数据）
