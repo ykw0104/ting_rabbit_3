@@ -4,7 +4,11 @@
       <!-- 面包屑 -->
       <XtxBread>
         <XtxBreadItem to="/">首页</XtxBreadItem>
-        <XtxBreadItem>{{ topCategory.name }}</XtxBreadItem>
+        <transition name="fade-right" mode="out-in">
+          <XtxBreadItem :key="topCategory.id">{{
+            topCategory.name
+          }}</XtxBreadItem>
+        </transition>
       </XtxBread>
 
       <!-- 轮播图 -->
@@ -161,5 +165,22 @@ watch(
     flex-wrap: wrap;
     padding: 0 65px 30px;
   }
+}
+
+.fade-right-enter-to,
+.fade-right-leave-from {
+  opacity: 1;
+  transform: none;
+}
+
+.fade-right-enter-active,
+.fade-right-leave-active {
+  transition: all 0.5s;
+}
+
+.fade-right-enter-from,
+.fade-right-leave-to {
+  opacity: 0;
+  transform: translate3d(20px, 0, 0);
 }
 </style>
