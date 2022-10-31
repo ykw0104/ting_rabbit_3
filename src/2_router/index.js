@@ -41,6 +41,13 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  // 切换路由时滚动到页面页面顶部
+  scrollBehavior() {
+    return {
+      top: 0,
+      left: 0,
+    };
+  },
 });
 
 export default router;

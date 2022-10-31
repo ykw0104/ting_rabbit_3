@@ -51,6 +51,7 @@ export default {
   name: "TopCategory",
 };
 </script>
+
 <script setup>
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
@@ -87,7 +88,10 @@ const getSubList = () => {
 watch(
   () => route.params.id,
   (newVal) => {
-    newVal && getSubList();
+    // newVal && getSubList();
+    if (newVal && `/category/${newVal}` === route.path) {
+      getSubList();
+    }
   },
   {
     immediate: true,
@@ -142,23 +146,26 @@ watch(
 }
 
 .ref-goods {
-  background-color: #fff;
-  margin-top: 20px;
   position: relative;
+  margin-top: 20px;
+  background-color: #fff;
+
   .head {
     .xtx-more {
       position: absolute;
       top: 20px;
       right: 20px;
     }
+
     .tag {
+      position: relative;
+      top: -20px;
       text-align: center;
       color: #999;
       font-size: 20px;
-      position: relative;
-      top: -20px;
     }
   }
+
   .body {
     display: flex;
     justify-content: flex-start;
