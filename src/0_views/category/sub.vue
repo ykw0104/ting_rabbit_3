@@ -3,6 +3,9 @@
     <div class="container">
       <!-- 面包屑 -->
       <SubBread />
+
+      <!-- 筛选区 -->
+      <SubFilter />
     </div>
   </div>
 </template>
@@ -14,6 +17,7 @@ export default {
 </script>
 <script setup>
 import SubBread from "./components/sub-bread.vue";
+import SubFilter from "./components/sub-filter";
 </script>
 
 <style lang="scss" scoped></style>

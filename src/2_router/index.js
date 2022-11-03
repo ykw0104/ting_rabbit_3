@@ -8,6 +8,8 @@ const TopCategory = () => import("@/0_views/category");
 // 二级分类
 const SubCategory = () => import("@/0_views/category/sub");
 
+const Goods = () => import("@/0_views/goods/index");
+
 const routes = [
   {
     path: "/",
@@ -34,6 +36,7 @@ const routes = [
         name: "SubCategory",
         component: SubCategory,
       },
+      { path: "/product/:id", name: "product", component: Goods },
     ],
   },
 ];
