@@ -6,6 +6,9 @@
 
       <!-- 筛选区 -->
       <SubFilter />
+
+      <!--  -->
+      <XtxCheckbox v-model="isAllChecked">全选</XtxCheckbox>
     </div>
   </div>
 </template>
@@ -16,8 +19,11 @@ export default {
 };
 </script>
 <script setup>
+import { ref } from "vue";
 import SubBread from "./components/sub-bread.vue";
 import SubFilter from "./components/sub-filter";
+
+const isAllChecked = ref(true);
 </script>
 
 <style lang="scss" scoped></style>
