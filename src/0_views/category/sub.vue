@@ -7,8 +7,13 @@
       <!-- 筛选区 -->
       <SubFilter />
 
-      <!--  -->
-      <XtxCheckbox v-model="isAllChecked">全选</XtxCheckbox>
+      <!-- 商品面板 -->
+      <div class="goods-list">
+        <!-- 排序 -->
+        <SubSort />
+
+        <!-- 列表 -->
+      </div>
     </div>
   </div>
 </template>
@@ -22,8 +27,15 @@ export default {
 import { ref } from "vue";
 import SubBread from "./components/sub-bread.vue";
 import SubFilter from "./components/sub-filter";
+import SubSort from "./components/sub-sort";
 
 const isAllChecked = ref(true);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.goods-list {
+  padding: 0 25px;
+  margin-top: 25px;
+  background: #fff;
+}
+</style>
