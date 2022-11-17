@@ -46,8 +46,10 @@
       </a>
     </div>
     <div class="check">
-      <XtxCheckbox v-model="sortParams.inventory">仅显示有货商品</XtxCheckbox>
-      <XtxCheckbox v-model="sortParams.onlyDiscount"
+      <XtxCheckbox @change="changeCheck" v-model="sortParams.inventory"
+        >仅显示有货商品</XtxCheckbox
+      >
+      <XtxCheckbox @change="changeCheck" v-model="sortParams.onlyDiscount"
         >仅显示特惠商品</XtxCheckbox
       >
     </div>
@@ -62,6 +64,8 @@ export default {
 
 <script setup>
 import { reactive } from "vue";
+
+const emit = defineEmits(["sort-change"]);
 
 // 1. 根据后台需要的参数定义数据对象
 // 2. 根据数据对象，绑定组件（复选框，排序按钮）
@@ -92,15 +96,22 @@ const changeSort = (sortField) => {
     sortParams.sortField = sortField;
     sortParams.sortMethod = null;
   }
+
+  emit("sort-change", sortParams);
+};
+
+const changeCheck = (sortField) => {
+  emit("sort-change", sortParams);
 };
 </script>
 
 <style scoped lang="scss">
 .sub-sort {
-  height: 80px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  height: 80px;
+
   .sort {
     display: flex;
     a {

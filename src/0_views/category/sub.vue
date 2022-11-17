@@ -5,12 +5,12 @@
       <SubBread />
 
       <!-- 筛选区 -->
-      <SubFilter />
+      <SubFilter @filter-change="filterChange" />
 
       <!-- 商品面板 -->
       <div class="goods-list">
         <!-- 排序 -->
-        <SubSort />
+        <SubSort @sort-change="sortChange" />
 
         <!-- 列表 -->
         <ul>
@@ -87,6 +87,24 @@ watch(
     }
   }
 );
+
+// 更改排序组件的筛选
+const sortChange = (sortParams) => {
+  finished.value = false;
+  // 合并请求参数, 保留之前参数
+  reqParams = { ...reqParams, ...sortParams };
+  reqParams.page = 1;
+  goodsList.value = [];
+};
+
+// 更改筛选组件的筛选
+const filterChange = (filterParams) => {
+  finished.value = false;
+  // 合并请求参数, 保留之前参数
+  reqParams = { ...reqParams, ...filterParams };
+  reqParams.page = 1;
+  goodsList.value = [];
+};
 </script>
 
 <style lang="scss" scoped>
